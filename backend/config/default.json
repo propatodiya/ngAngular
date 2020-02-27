@@ -1,0 +1,11 @@
+{
+    "db": {
+        "mysql": {
+            "host": "localhost",
+            "port": "",
+            "database": "attndb",
+            "user": "root",
+            "password": "patel"
+        }
+    }
+}

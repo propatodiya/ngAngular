@@ -1,0 +1,84 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <div class="form-group mt-3">
+        <input type="text" class="form-control input-sm" placeholder="Type to filter the name column..." />
+      </div>
+      <div class="data-table">
+        <!-- <ngx-datatable class="material expandable" 
+                [rows]="portfolioList"
+                [columns]="columns"
+                rowHeight="auto"
+                [columnMode]="ColumnMode.force"
+                [headerHeight]="50"
+                [count]="page.totalElements"
+                [footerHeight]="50"
+                rowHeight="auto"
+                [externalPaging]="true"
+                [offset]="page.pageNumber"
+                [scrollbarV]="true"
+                [limit]="page.size"
+                ></ngx-datatable> -->
+        <ngx-datatable
+        #myTable
+        class="material"
+        [columnMode]="ColumnMode.force"
+        [headerHeight]="50"
+        [footerHeight]="50"
+        [rowHeight]="50"
+        [rows]="transactionsList"
+      >
+        <!-- Row Detail Template -->
+        <ngx-datatable-row-detail rowHeight="100" #myDetailRow (toggle)="onDetailToggle($event)">
+          <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
+            <div style="padding-left:35px;">
+              <div><strong>Address</strong></div>
+              <div>Address</div>
+            </div>
+          </ng-template>
+        </ngx-datatable-row-detail>
+        <!-- Column Templates -->
+        <ngx-datatable-column
+          [width]="50"
+          [resizeable]="false"
+          [sortable]="false"
+          [draggable]="false"
+          [canAutoResize]="false"
+        >
+          <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+            <a href="javascript:void(0)" [class.datatable-icon-right]="!expanded" [class.datatable-icon-down]="expanded"
+              title="Expand/Collapse Row"
+              (click)="toggleExpandRow(row)" >
+            </a>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Security" width="200">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            Security {{ row['SecurityId'] }}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Date" width="300">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            {{ row['Date']  }}
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Shares" width="80">
+            <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+              {{ rowIndex }}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Price" width="80">
+            <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+              {{ rowIndex }}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Amount" width="80">
+            <ng-template let-row="row" let-row="row" ngx-datatable-cell-template>
+              {{ row['Amount'] }}
+            </ng-template>
+          </ngx-datatable-column>
+      </ngx-datatable>
+      </div>
+    </div>
+  </div>
+</div>
