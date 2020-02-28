@@ -13,6 +13,9 @@ export class MainService extends BaseProviderService {
     return this.makePostCall(environment.APIURL + '/portfolio', pages);
   }
   portfolioById(id) {
-    return this.makeGetCall(environment.APIURL + '/portfolio/' + id)
+    return this.makeGetCall(environment.APIURL + '/portfolio/' + id);
+  }
+  portfolioByIdDate(request) {
+    return this.makePostCall(environment.APIURL + '/portfolio/byDate', request);
   }
 }

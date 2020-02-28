@@ -1,84 +1,149 @@
 <div class="container">
-  <div class="row">
+  <div class="row" *ngIf="!apiCallActive">
     <div class="col">
-      <div class="form-group mt-3">
-        <input type="text" class="form-control input-sm" placeholder="Type to filter the name column..." />
-      </div>
-      <div class="data-table">
-        <!-- <ngx-datatable class="material expandable" 
-                [rows]="portfolioList"
-                [columns]="columns"
-                rowHeight="auto"
-                [columnMode]="ColumnMode.force"
-                [headerHeight]="50"
-                [count]="page.totalElements"
-                [footerHeight]="50"
-                rowHeight="auto"
-                [externalPaging]="true"
-                [offset]="page.pageNumber"
-                [scrollbarV]="true"
-                [limit]="page.size"
-                ></ngx-datatable> -->
-        <ngx-datatable
-        #myTable
-        class="material"
-        [columnMode]="ColumnMode.force"
-        [headerHeight]="50"
-        [footerHeight]="50"
-        [rowHeight]="50"
-        [rows]="transactionsList"
-      >
-        <!-- Row Detail Template -->
-        <ngx-datatable-row-detail rowHeight="100" #myDetailRow (toggle)="onDetailToggle($event)">
-          <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
-            <div style="padding-left:35px;">
-              <div><strong>Address</strong></div>
-              <div>Address</div>
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+          <div class="document-main-title">
+            <div class="document-head">
+              <span>{{portfoliao.Name ? portfoliao.Name : 'portfoliao'}}</span>
             </div>
-          </ng-template>
-        </ngx-datatable-row-detail>
-        <!-- Column Templates -->
-        <ngx-datatable-column
-          [width]="50"
-          [resizeable]="false"
-          [sortable]="false"
-          [draggable]="false"
-          [canAutoResize]="false"
-        >
-          <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
-            <a href="javascript:void(0)" [class.datatable-icon-right]="!expanded" [class.datatable-icon-down]="expanded"
-              title="Expand/Collapse Row"
-              (click)="toggleExpandRow(row)" >
-            </a>
-          </ng-template>
-        </ngx-datatable-column>
-        <ngx-datatable-column name="Security" width="200">
-          <ng-template let-row="row" ngx-datatable-cell-template>
-            Security {{ row['SecurityId'] }}
-          </ng-template>
-        </ngx-datatable-column>
-        <ngx-datatable-column name="Date" width="300">
-          <ng-template let-row="row" ngx-datatable-cell-template>
-            {{ row['Date']  }}
-          </ng-template>
-        </ngx-datatable-column>
-        <ngx-datatable-column name="Shares" width="80">
-            <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
-              {{ rowIndex }}
-            </ng-template>
-          </ngx-datatable-column>
-          <ngx-datatable-column name="Price" width="80">
-            <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
-              {{ rowIndex }}
-            </ng-template>
-          </ngx-datatable-column>
-          <ngx-datatable-column name="Amount" width="80">
-            <ng-template let-row="row" let-row="row" ngx-datatable-cell-template>
-              {{ row['Amount'] }}
-            </ng-template>
-          </ngx-datatable-column>
-      </ngx-datatable>
+          </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12">
+          <div class="select-date">
+            <form class="ngform" [formGroup]="portfoliaoDetail" validate>
+              <div class="form-group label-floating mt-3">
+                <label class="control-label">Portfoliao Date</label>
+                <input class="form-control" angular-mydatepicker name="dob" (click)="dp.toggleCalendar()" (dateChanged)="onDateChanged($event)" formControlName="portfoliaoDate" [options]="myOptions" #dp="angular-mydatepicker" />
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="document-check-list">
+            <div class="documentlist">
+              <div class="row">
+                <div class="col-12">
+                  <div class="document-list-head">
+                    <ul>
+                      <li>
+                        <div class="docx-title"><span>Security</span> </div>
+                      </li>
+                      <li>
+                        <div class="docx-title"><span>Date</span></div>
+                      </li>
+                      <li>
+                        <div class="docx-title"><span>Shares</span></div>
+                      </li>
+                      <li>
+                        <div class="docx-title"><span>Price</span></div>
+                      </li>
+                      <li>
+                        <div class="docx-title"><span>Amount</span></div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <div id="portfolio" role="tablist">
+                    <div class="card-collapse" *ngFor="let item of transactionsList; index as i">
+                      <div class="card-header" role="tab" id="headingOne">
+                        <a class="card-link" data-toggle="collapse" href="#{{item.SecurityId}}" aria-controls="collapseOne" aria-expanded="true">
+                          <div class="card-link-title">
+                            <span class="accordion-arrow"><i class="caret"></i></span>
+                          </div>
+                          <ul>
+                            <li>
+                              <div class="docx-body">
+                                <div class="document-label">
+                                  <label>Security {{item.SecurityId}}</label>
+                                </div>
+                              </div>
+                            </li>
+                            <li>
+                              <div class="docx-body">
+                                <div class="document-label">
+                                  <label>{{item.Date}}</label>
+                                </div>
+                              </div>
+                            </li>
+                            <li>
+                              <div class="docx-body">
+                                <div class="document-label">
+                                  <label>{{item.Share}}</label>
+                                </div>
+                              </div>
+                            </li>
+                            <li>
+                              <div class="docx-body">
+                                <div class="document-label">
+                                  <label>{{item.Value}}</label>
+                                </div>
+                              </div>
+                            </li>
+                            <li>
+                              <div class="docx-body">
+                                <div class="document-label">
+                                  <label>{{item.Amount}}</label>
+                                </div>
+                              </div>
+                            </li>
+                          </ul>
+                        </a>
+                      </div>
+                      <div [id]="item.SecurityId" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
+                        <div class="document-list-body">
+                          <ul *ngFor="let subItem of item.security; index as j">
+                            <li>
+                              <div class="docx-body">
+                                <div class="document-label">
+                                  <label>{{item.Type}}</label>
+                                </div>
+                              </div>
+                            </li>
+                            <li>
+                              <div class="docx-body">
+                                <div class="document-label">
+                                  <label>{{subItem.EndDate}}</label>
+                                </div>
+                              </div>
+                            </li>
+                            <li>
+                              <div class="docx-body"><span>{{item.Share}}</span></div>
+                            </li>
+                            <li>
+                              <div class="docx-body"><span>{{subItem.Value}}</span></div>
+                            </li>
+                            <li>
+                              <div class="docx-body"><span>{{subItem.Amount}}</span></div>
+                            </li>
+                          </ul>
+                          <ul *ngIf="item.security.length === 0">
+                            <li>
+                              <div class="docx-body">
+                                <div class="document-label">
+                                  <label>Entry not found on {{portfoliaoDetail.value.portfoliaoDate?.singleDate?.formatted}}</label>
+                                </div>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
+</div>
+<div class="loader" *ngIf="apiCallActive">
+  <img src="assets/loading-animations-preloader-gifs-ui-ux-effects-23.gif">
 </div>

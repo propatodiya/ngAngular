@@ -10,7 +10,7 @@ import { AppComponent } from './app.component';
 import { PortfolioComponent } from './portfolio/portfolio.component';
 import { SecuritieComponent } from './securitie/securitie.component';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-
+import { AngularMyDatePickerModule } from './../package';
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,6 +24,7 @@ import { NgxDatatableModule } from '@swimlane/ngx-datatable';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     NgxDatatableModule,
+    AngularMyDatePickerModule,
     AppRoutingModule
   ],
   providers: [],

@@ -4,6 +4,80 @@
 @import '~@swimlane/ngx-datatable/themes/material.scss';
 @import '~@swimlane/ngx-datatable/assets/icons.css';
 @import "~bootstrap/scss/bootstrap";
+$brand-primary : rgb(50, 87, 126) !default;
+$brand-primary-text : rgba(110, 123, 137, 1) !default;
+$brand-info : rgb(113, 186, 241) !default;
+$brand-success : rgb(60, 168, 113) !default;
+$brand-warning : rgb(255, 178, 54) !default;
+$brand-danger : rgb(184, 36, 41) !default;
+$brand-rose : rgb(233, 30, 99) !default;
+$brand-inverse : rgb(60, 72, 88) !default;
+$brand-secoundry : rgba(48, 214, 190, 1) !default;
+$brand-skyblue : rgba(35, 193, 215, 1) !default;
+$brand-slight-black : rgba(17, 35, 54, 1) !default;
+$light-white: rgba(236, 236, 236, 0.6) !default;
+$dark-black: rgba(7, 28, 51, 1) !default;
+$silver: rgb(192, 192, 192) !default;
+
+html * {
+  // -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  -webkit-overflow-scrolling: touch;
+
+  &:focus {
+    outline: 0;
+  }
+}
+
+body {
+  background-color: #fff;
+  color: $dark-black;
+  font-weight: 300;
+  line-height: normal;
+  margin: 0;
+  font-size: 14px;
+}
+
+a {
+  &:focus {
+    outline: none;
+  }
+}
+
+button:focus {
+  outline: none;
+}
+
+.loader {
+  position: fixed;
+  top: 0;
+  z-index: 1;
+  width: 100%;
+  left: 0;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  img {
+    max-width: 300px;
+    width: 100%;
+  }
+}
+
+@mixin box-shadow-default() {
+  -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+}
+
+@mixin transition-all($time, $type) {
+  -webkit-transition: all $time $type;
+  -moz-transition: all $time $type;
+  -o-transition: all $time $type;
+  -ms-transition: all $time $type;
+  transition: all $time $type;
+}
 
 .ngx-datatable.material .datatable-header .datatable-header-cell {
   font-size: inherit;
@@ -22,3 +96,10 @@
 .ngx-datatable.material.multi-click-selection .datatable-body-row.active:hover .datatable-row-group {
   background-color: #2196F3;
 }
+
+.form-group {
+  position: relative;
+}
+
+@import './assets/card-table';
+@import './assets/card-collapse';

@@ -33,3 +33,26 @@ export class Portfolio {
   lastModified: string;
   holdings: number;
 }
+
+
+export class PortfolioByDateResponse {
+  _Id: string;
+  Name: string;
+  Transactions: TransactionList[];
+}
+
+export class TransactionList {
+  SecurityId: string;
+  Type: string;
+  Date: string;
+  Amount: string;
+  security: Security[];
+  Share: number;
+  Value: string;
+}
+
+export class Security {
+  EndDate: string;
+  Value: string;
+  Amount: number;
+}

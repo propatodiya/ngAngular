@@ -4,9 +4,7 @@ const {
 } = require('../exceptions');
 
 class ConfigController {
-	constructor() {
-		this.configBiz = new ConfigBiz();
-	}
+	constructor() { }
 	register(app) {
 		app.route('/portfolio')
 			.post(async (request, response, next) => {
@@ -15,7 +13,8 @@ class ConfigController {
 						pageNumber,
 						size
 					} = request.body;
-					const data = await this.configBiz.getPortfolio(pageNumber, size);
+					const configBiz = new ConfigBiz();
+					const data = await configBiz.getPortfolio(pageNumber, size);
 					response.status(200).send(data);
 				} catch (error) {
 					next(error);
@@ -24,7 +23,8 @@ class ConfigController {
 		app.route('/securitie')
 			.get(async (request, response, next) => {
 				try {
-					const data = await this.configBiz.getSecuritie();
+					const configBiz = new ConfigBiz();
+					const data = await configBiz.getSecuritie();
 					response.status(200).send(data);
 				} catch (error) {
 					next(error);
@@ -36,13 +36,31 @@ class ConfigController {
 					const {
 						id,
 					} = request.params;
-					const data = await this.configBiz.getPortfolioById(id);
+					const configBiz = new ConfigBiz();
+					const data = await configBiz.getPortfolioById(id);
 					response.status(200).send(data);
 				} catch (error) {
 					// next({ action: "failure" });
 					next(error);
 				}
 			});
+		app.route('/portfolio/byDate')
+			.post(async (request, response, next) => {
+				try {
+					const {
+						id,
+						portfoliaoDate
+					} = request.body;
+					if (!id || !portfoliaoDate) {
+						throw new MissingParamException('Id or Date');
+					}
+					const configBiz = new ConfigBiz();
+					const data = await configBiz.getPortfolioByDate(id, portfoliaoDate);
+					response.status(200).send(data);
+				} catch (error) {
+					next(error);
+				}
+			})
 		app.route('/test')
 			.get(async (request, response, next) => {
 				try {

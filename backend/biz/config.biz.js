@@ -5,13 +5,12 @@ const {
 } = require('./../exceptions');
 
 class ConfigBiz {
-	constructor() {
-		this.configRepo = new ConfigRepo();
-	}
+	constructor() {}
 	getPortfolio(pageNumber, size) {
 		return new Promise(async (resolve, reject) => {
 			try {
-				const portfolioList = await this.configRepo.getPortfolios();
+				const configRepo = new ConfigRepo();
+				const portfolioList = await configRepo.getPortfolios();
 				let page = {};
 				if (portfolioList) {
 					page = new DataTablePage(size, portfolioList.length, portfolioList.length / size, pageNumber);
@@ -22,7 +21,7 @@ class ConfigBiz {
 						if (portfolioList[i].Transactions) {
 							portfolioList[i]['lastModified'] = portfolioList[i].Transactions[portfolioList[i].Transactions.length - 1].Date;
 							portfolioList[i]['holdings'] = portfolioList[i].Transactions.length;
-							delete portfolioList[i].Transactions
+							// portfolioList[i].Transactions
 						}
 						page.data.push(portfolioList[i]);
 					}
@@ -36,7 +35,8 @@ class ConfigBiz {
 	getSecuritie() {
 		return new Promise(async (resolve, reject) => {
 			try {
-				const data = await this.configRepo.getSecuritie();
+				const configRepo = new ConfigRepo();
+				const data = await configRepo.getSecuritie();
 				if (data.Securities) {
 					for (const x of data.Securities) {
 						if (x.HistoryDetail) {
@@ -55,11 +55,70 @@ class ConfigBiz {
 	getPortfolioById(id) {
 		return new Promise(async (resolve, reject) => {
 			try {
-				const data = await this.configRepo.getPortfolios();
+				const configRepo = new ConfigRepo();
+				const data = await configRepo.getPortfolios();
 				let response = {};
 				if (data) {
 					for (const x of data) {
 						if (x._Id === id) {
+							const security = await configRepo.getSecuritie();
+							// x['security'] = security;
+							for (const y of x.Transactions) {
+								y['security'] = security.filter((item) => {
+									return y.SecurityId === item._Id;
+								})[0];
+							}
+							response = x;
+							break;
+						}
+					}
+				}
+				resolve(response);
+			} catch (error) {
+				reject(error);
+			}
+		});
+	}
+	getPortfolioByDate(id, portfoliaoDate) {
+		return new Promise(async (resolve, reject) => {
+			try {
+				const configRepo = new ConfigRepo();
+				const data = await configRepo.getPortfolios();
+				let response = {};
+				if (data) {
+					for (const x of data) {
+						if (+x._Id === id) {
+							const security = await configRepo.getSecuritie();
+							if (x.Transactions && x.Transactions.length > 0) {
+								for (const y of x.Transactions) {
+									const securitylist = security.filter((item) => {
+										return y.SecurityId === item._Id;
+									});
+									y['security'] = [];
+									y['Share'] = 0;
+									y['Value'] = 0;
+									if (securitylist && securitylist.length > 0) {
+										const securitylistHistory = securitylist[0].HistoryDetail;
+										if (securitylistHistory) {
+											for (const itemEle of securitylistHistory) {
+												if (y.Date === itemEle.EndDate) {
+													y.Share = +y.Amount / +itemEle.Value;
+													y.Share = +y.Share.toFixed(2);
+													y.Value = itemEle.Value;
+												}
+											}
+											for (const itemEle of securitylistHistory) {
+												if (itemEle.EndDate === portfoliaoDate) {
+													itemEle['Amount'] = y.Share * +itemEle.Value;
+													itemEle.Amount = +itemEle.Amount.toFixed(2);
+													y.security.push(itemEle);
+												}
+											}
+										}
+									}
+								}
+							}
+							
 							response = x;
 							break;
 						}
