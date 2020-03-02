@@ -5,7 +5,7 @@ const {
 } = require('./../exceptions');
 
 class ConfigBiz {
-	constructor() {}
+	constructor() { }
 	getPortfolio(pageNumber, size) {
 		return new Promise(async (resolve, reject) => {
 			try {
@@ -83,7 +83,8 @@ class ConfigBiz {
 		return new Promise(async (resolve, reject) => {
 			try {
 				const configRepo = new ConfigRepo();
-				const data = await configRepo.getPortfolios();
+				let data = [];
+				data = await configRepo.getPortfolios();
 				let response = {};
 				if (data) {
 					for (const x of data) {
@@ -118,7 +119,6 @@ class ConfigBiz {
 									}
 								}
 							}
-							
 							response = x;
 							break;
 						}

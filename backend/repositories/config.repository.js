@@ -5,7 +5,8 @@ class ConfigRepo {
 	getPortfolios() {
 		return new Promise(async (resolve, reject) => {
 			try {
-				var portfoliosObj = require('./../json/portfolios.json');
+				let portfoliosObj = {};
+				portfoliosObj = require('./../json/portfolios.json');
 				return resolve(portfoliosObj.Portfolios);
 			} catch (error) {
 				reject(error);
@@ -15,7 +16,8 @@ class ConfigRepo {
 	getSecuritie() {
 		return new Promise(async (resolve, reject) => {
 			try {
-				var securitiesObj = require('./../json/securities.json');
+				let securitiesObj = {};
+				securitiesObj = require('./../json/securities.json');
 				return resolve(securitiesObj.Securities);
 			} catch (error) {
 				reject(error);
