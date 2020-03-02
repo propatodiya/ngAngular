@@ -14,9 +14,7 @@
             <form class="ngform" [formGroup]="portfoliaoDetail" validate>
               <div class="form-group label-floating mt-3">
                 <label class="control-label">Portfoliao Date</label>
-                <input class="form-control" angular-mydatepicker name="dob" (click)="dp.toggleCalendar()"
-                  (dateChanged)="onDateChanged($event)" formControlName="portfoliaoDate" [options]="myOptions"
-                  #dp="angular-mydatepicker" />
+                <input class="form-control" angular-mydatepicker name="dob" (click)="dp.toggleCalendar()" (dateChanged)="onDateChanged($event)" formControlName="portfoliaoDate" [options]="myOptions" #dp="angular-mydatepicker" />
               </div>
             </form>
           </div>
@@ -54,8 +52,7 @@
                   <div id="portfolio" role="tablist">
                     <div class="card-collapse" *ngFor="let item of transactionsList; index as i">
                       <div class="card-header" role="tab" id="headingOne">
-                        <a class="card-link" data-toggle="collapse" href="#{{item.SecurityId + i}}"
-                          aria-controls="collapseOne" aria-expanded="true">
+                        <a class="card-link" data-toggle="collapse" href="#{{item.SecurityId + i}}" aria-controls="collapseOne" aria-expanded="true">
                           <div class="card-link-title">
                             <span class="accordion-arrow"><i class="caret"></i></span>
                           </div>
@@ -70,7 +67,7 @@
                             <li>
                               <div class="docx-body">
                                 <div class="document-label">
-                                  <label>{{item.Date}}</label>
+                                  <label>{{getDate(item.Date)}}</label>
                                 </div>
                               </div>
                             </li>
@@ -98,8 +95,7 @@
                           </ul>
                         </a>
                       </div>
-                      <div [id]="item.SecurityId + i" class="collapse show" role="tabpanel"
-                        aria-labelledby="headingOne">
+                      <div [id]="item.SecurityId + i" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
                         <div class="document-list-body">
                           <ul *ngFor="let subItem of item.security; index as j">
                             <li>
@@ -112,7 +108,7 @@
                             <li>
                               <div class="docx-body">
                                 <div class="document-label">
-                                  <label>{{subItem.EndDate}}</label>
+                                  <label>{{getDate(subItem.EndDate)}}</label>
                                 </div>
                               </div>
                             </li>
@@ -161,6 +157,13 @@
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group mt-4 text-right">
+            <button class="btn btn-primary btn-round px-4" (click)="backToPortfolio()">Back</button>
           </div>
         </div>
       </div>

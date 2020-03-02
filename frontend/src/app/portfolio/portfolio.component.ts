@@ -13,6 +13,7 @@ export class PortfolioComponent implements OnInit {
   public portfolioList: Array<Portfolio> = [];
   public temp = [];
   public page = new NgDataTablePage();
+  public apiCallActive = true;
   public columns = [
     { prop: 'Name', name: 'Name' },
     { prop: 'holdings', name: 'Number of Holdings' },
@@ -31,6 +32,7 @@ export class PortfolioComponent implements OnInit {
   }
   setPage(pageInfo) {
     this.page.pageNumber = pageInfo.offset;
+    this.apiCallActive = true;
     this.mainService.getPortfolio(this.page).subscribe((response: PortfolioResponse) => {
       this.portfolioList = response.data as Portfolio[];
       this.temp = response.data;
@@ -38,7 +40,9 @@ export class PortfolioComponent implements OnInit {
       this.page.size = response.size;
       this.page.totalElements = response.totalElements;
       this.page.totalPages = response.totalPages;
+      this.apiCallActive = false;
     }, (error: any) => {
+      this.apiCallActive = false;
       console.log(error);
     });
   }

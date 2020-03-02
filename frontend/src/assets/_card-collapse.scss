@@ -39,7 +39,7 @@
       position: relative;
       color: $brand-slight-black;
       font-size: inherit;
-      border-bottom: 1px solid $light-white;
+      //   border-bottom: 1px solid $light-white;
       background: $white;
 
       .card-link-title {
@@ -56,9 +56,6 @@
             border-width: 0 2px 2px 0;
             border-radius: 0px;
           }
-        }
-
-        span.document-title {
         }
 
         span.document-count {
@@ -103,7 +100,7 @@
       &:active,
       &[aria-expanded="true"] {
         color: $brand-primary;
-        background: $light-white;
+        // background: $light-white;
       }
 
       ul {
@@ -127,6 +124,8 @@
           -webkit-box-orient: vertical;
           -webkit-box-direction: normal;
           flex-direction: column;
+          font-weight: 500;
+          color: #000;
 
           &:last-child {
             text-align: center;
@@ -138,9 +137,11 @@
     }
   }
 }
+
 .documentlist {
   .card-footer {
     padding: 0px;
+
     ul {
       display: flex;
       margin: 0;
@@ -150,7 +151,10 @@
       table-layout: fixed;
       width: 100%;
       padding: 0px 15px;
-      border-top: 1px solid rgba(50, 87, 126, 0.2);
+      background-color: #3c4858;
+      color: #fff;
+
+
       li {
         display: inline-flex;
         padding: 10px;
@@ -161,6 +165,7 @@
         -webkit-box-orient: vertical;
         -webkit-box-direction: normal;
         flex-direction: column;
+        font-weight: 500;
       }
     }
   }
@@ -173,4 +178,8 @@
       padding: 15px;
     }
   }
+}
+
+.btn-round {
+  border-radius: 30px;
 }

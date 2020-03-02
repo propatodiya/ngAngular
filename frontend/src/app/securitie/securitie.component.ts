@@ -86,4 +86,14 @@ export class SecuritieComponent implements OnInit {
       portfoliaoDate: new FormControl(this.portfoliaoDate, [Validators.required]),
     });
   }
+  getDate(date) {
+    if (date) {
+      return moment(date).format('DD-MM-YYYY') as string;
+    } else {
+      return '--';
+    }
+  }
+  backToPortfolio() {
+    this.router.navigate(['/home']);
+  }
 }

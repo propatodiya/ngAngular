@@ -5,7 +5,7 @@ const {
 } = require('./../exceptions');
 
 class ConfigBiz {
-	constructor() { }
+	constructor() {}
 	getPortfolio(pageNumber, size) {
 		return new Promise(async (resolve, reject) => {
 			try {
@@ -62,7 +62,6 @@ class ConfigBiz {
 					for (const x of data) {
 						if (x._Id === id) {
 							const security = await configRepo.getSecuritie();
-							// x['security'] = security;
 							for (const y of x.Transactions) {
 								y['security'] = security.filter((item) => {
 									return y.SecurityId === item._Id;
@@ -89,9 +88,9 @@ class ConfigBiz {
 				if (data) {
 					for (const x of data) {
 						if (+x._Id === id) {
-							const security = await configRepo.getSecuritie();
 							if (x.Transactions && x.Transactions.length > 0) {
 								for (const y of x.Transactions) {
+									const security = await configRepo.getSecuritie();
 									const securitylist = security.filter((item) => {
 										return y.SecurityId === item._Id;
 									});
@@ -102,16 +101,16 @@ class ConfigBiz {
 										const securitylistHistory = securitylist[0].HistoryDetail;
 										if (securitylistHistory) {
 											for (const itemEle of securitylistHistory) {
+												let Value = +itemEle.Value;
 												if (y.Date === itemEle.EndDate) {
-													y.Share = +y.Amount / +itemEle.Value;
+													y.Share = +y.Amount / Value;
 													y.Share = +y.Share.toFixed(2);
-													y.Value = itemEle.Value;
+													y.Value = Value.toFixed(2);
 												}
-											}
-											for (const itemEle of securitylistHistory) {
 												if (itemEle.EndDate === portfoliaoDate) {
-													itemEle['Amount'] = y.Share * +itemEle.Value;
+													itemEle['Amount'] = y.Share * Value;
 													itemEle.Amount = +itemEle.Amount.toFixed(2);
+													itemEle.Value = Value.toFixed(2);
 													y.security.push(itemEle);
 												}
 											}

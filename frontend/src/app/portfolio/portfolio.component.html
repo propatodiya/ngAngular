@@ -1,28 +1,15 @@
 <div class="container">
-    <div class="row">
-        <div class="col">
-            <div class="form-group mt-3">
-                <input type="text" class="form-control input-sm"  placeholder="Type to filter the name column..." (keyup)="updateFilter($event)" />
-            </div>
-            <div class="data-table">
-                <ngx-datatable class="material" 
-                [rows]="portfolioList"
-                [columns]="columns"
-                rowHeight="auto"
-                [columnMode]="ColumnMode.force"
-                [headerHeight]="50"
-                [count]="page.totalElements"
-                [footerHeight]="50"
-                rowHeight="auto"
-                [externalPaging]="true"
-                [offset]="page.pageNumber"
-                [limit]="page.size"
-                [selectionType]="SelectionType.single"
-                (page)="setPage($event)"
-                (select)="onSelect($event)"
-                ></ngx-datatable>
-                <!-- [selected]="selected" (activate)="onActivate($event)" -->
-            </div>
-        </div>
+  <div class="row" *ngIf="!apiCallActive">
+    <div class="col">
+      <div class="form-group mt-3">
+        <input type="text" class="form-control input-sm" placeholder="Type to filter the name column..." (keyup)="updateFilter($event)" />
+      </div>
+      <div class="data-table">
+        <ngx-datatable class="material" [rows]="portfolioList" [columns]="columns" rowHeight="auto" [columnMode]="ColumnMode.force" [headerHeight]="50" [count]="page.totalElements" [footerHeight]="50" rowHeight="auto" [externalPaging]="true" [offset]="page.pageNumber" [limit]="page.size" [selectionType]="SelectionType.single" (page)="setPage($event)" (select)="onSelect($event)"></ngx-datatable>
+      </div>
     </div>
+  </div>
+</div>
+<div class="loader" *ngIf="apiCallActive">
+  <img src="assets/loading-animations-preloader-gifs-ui-ux-effects-23.gif">
 </div>
